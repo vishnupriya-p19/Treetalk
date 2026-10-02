@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TreeTalk Guardian — Live Network</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">◍</span>
+    <div>
+      <h1>TreeTalk Guardian</h1>
+      <p class="tagline">Live sensor &amp; emergency network</p>
+    </div>
+  </div>
+  <div class="conn-status" id="connStatus">
+    <span class="dot"></span> <span id="connLabel">Connecting…</span>
+  </div>
+</header>
+
+<div class="sos-banner" id="sosBanner" hidden>
+  <span id="sosText"></span>
+  <a id="sosDirections" href="#" target="_blank" style="display:none;">Get Directions</a>
+  <button id="sosDismiss">Dismiss</button>
+</div>
+
+<main class="layout">
+
+  <section class="panel map-panel">
+    <div class="panel-head">
+      <h2>Forest map</h2>
+      <span class="panel-sub" id="nodeCount">0 nodes reporting</span>
+    </div>
+    <div id="map"></div>
+  </section>
+
+  <section class="panel alert-panel">
+    <div class="panel-head">
+      <h2>Alert log</h2>
+    </div>
+    <ul id="alertList" class="alert-list">
+      <li class="empty">No alerts yet. This feed updates the instant a node reports something.</li>
+    </ul>
+  </section>
+
+  <section class="panel nodes-panel">
+    <div class="panel-head">
+      <h2>Nodes</h2>
+    </div>
+    <div id="nodeGrid" class="node-grid">
+      <p class="empty">Waiting for the first packet from the gateway…</p>
+    </div>
+  </section>
+
+  <section class="panel chart-panel">
+    <div class="panel-head">
+      <h2>Environment history</h2>
+      <select id="chartNodeSelect"></select>
+    </div>
+    <canvas id="historyChart" height="90"></canvas>
+  </section>
+
+  <section class="panel test-panel" style="grid-column: 1 / -1;">
+    <div class="panel-head">
+      <h2>Send Test Reading</h2>
+      <span class="panel-sub">Paste a "Sent: {...}" line from your tree node's Serial Monitor</span>
+    </div>
+    <textarea id="manualJson" rows="3" placeholder='{"id":"TREE-01","lat":19.07,"lon":72.87,"fix":true,"temp":24.5,"pressure":1010,"tilt":0,"tiltAlert":false,"soil":40,"soundAlert":false,"sos":false}'></textarea>
+    <div class="test-panel-row">
+      <button id="sendManual">Send to Dashboard</button>
+      <button id="sendManualSOS" class="sos-test-btn">Send as SOS (test)</button>
+      <span id="manualStatus"></span>
+    </div>
+  </section>
+
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
